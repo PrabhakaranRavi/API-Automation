@@ -1,11 +1,17 @@
 package ValidateStatusCode;
 
 import io.restassured.RestAssured;
+import io.restassured.http.Cookie;
+import io.restassured.http.Cookies;
+import io.restassured.http.Header;
+import io.restassured.http.Headers;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static junit.framework.Assert.assertEquals;
@@ -13,6 +19,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 public class statusValidate {
+
     @Test
     public void statusCode(){
                 given().
@@ -176,5 +183,172 @@ public class statusValidate {
         int actualStatusCode =response.statusCode(); //RestAssured
         assertThat(actualStatusCode,equalTo(200));
         System.out.println(response.body().asString());
+    }
+
+
+    @Test
+    public void formParam(){
+        //Set Base URI for the API
+        RestAssured.baseURI = "https://reqres.in/api/";
+
+        // Send GET request and store the response in a variable
+        Response response = given().
+                contentType("application/x-www-form-urlencoded").
+                formParam("name","morpheus").
+                formParam("job","leader").
+                when().
+                post("users");
+
+        //Saving response code
+        int actualStatusCode =response.statusCode(); //RestAssured
+        assertThat(actualStatusCode,equalTo(201));
+
+        //Assert that the response contains the correct name and job values
+        response.then().body("name", equalTo("morpheus"));
+        response.then().body("job", equalTo("leader"));
+
+    }
+
+    @Test
+    public void singleHeader(){
+        //Set Base URI for the API
+        RestAssured.baseURI = "https://reqres.in/api/";
+
+        // Send GET request and store the response in a variable
+        Response response = given().
+                header("Content-Type","application/json").
+                when().
+                get("users");
+
+
+        //Saving response code
+        int actualStatusCode =response.statusCode(); //RestAssured
+        assertThat(actualStatusCode,equalTo(200));
+
+        System.out.println("singleHeader Executed!");
+
+
+    }
+
+    @Test
+    public void multiHeaders(){
+        //Set Base URI for the API
+        RestAssured.baseURI = "https://reqres.in/api/";
+
+        // Send GET request and store the response in a variable
+        Response response = given().
+                header("Authorization","bearer werfwb548wwetrew").
+                header("Content-Type","application/json").
+                when().
+                get("users");
+
+        //Saving response code
+        int actualStatusCode =response.statusCode(); //RestAssured
+        assertThat(actualStatusCode,equalTo(200));
+
+        System.out.println("multiHeaders Executed!");
+    }
+
+    @Test
+    public void multiHeadersWithMap(){
+        //Set Base URI for the API
+        RestAssured.baseURI = "https://reqres.in/api/";
+
+        //Create map to hold headers
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Content-Type","application/json");
+        headers.put("Authorization","bearer werfwb548wwetrew");
+
+        // Send GET request and store the response in a variable
+        Response response = given().
+                headers(headers).
+                when().
+                get("users");
+
+        //Saving response code
+        int actualStatusCode =response.statusCode(); //RestAssured
+        assertThat(actualStatusCode,equalTo(200));
+
+        System.out.println("multiHeadersWithMap Executed!");
+    }
+
+    @Test
+    public void validateResponseHeadersWithMap(){
+        //Set Base URI for the API
+        RestAssured.baseURI = "https://reqres.in/api/";
+
+        // Send GET request and store the response in a variable
+        Response response = given().
+                when().
+                get("users");
+
+        //Saving response code
+        int actualStatusCode =response.statusCode(); //RestAssured
+        assertThat(actualStatusCode,equalTo(200));
+
+        Headers headers = response.getHeaders();
+        for(Header h: headers){
+//            System.out.println(h.getName(), h.getValue();
+            if(h.getName().contains("Server")){
+                assertEquals(h.getValue(),"cloudflare");
+                System.out.println("Server name is: " + h.getValue());
+                System.out.println("validateResponseHeadersWithMap Executed!");
+            }
+        }
+
+    }
+
+    @Test
+    public void sendRequestUsingCookies(){
+        //Set Base URI for the API
+        RestAssured.baseURI = "https://reqres.in/api/";
+
+        // Send GET request and store the response in a variable
+        Response response = given().
+                cookie("cookieKey1","cookieValue1").
+                cookie("cookieKey2","cookieValue2").
+                when().
+                get("users?page=2");
+
+        //Saving response code
+        int actualStatusCode =response.statusCode(); //RestAssured
+        assertThat(actualStatusCode,equalTo(200));
+
+        System.out.println("sendRequestUsingCookies Executed!");
+    }
+
+    @Test
+    public void sendRequestUsingCookiesBuilder(){
+        //Set Base URI for the API
+        RestAssured.baseURI = "https://reqres.in/api/";
+
+        // Create cookies with comments
+        Cookie cookie1 = new Cookie.Builder("cookieKey1", "cookieValue1")
+                .setComment("This is the first cookie")
+                .build();
+        Cookie cookie2 = new Cookie.Builder("cookieKey2", "cookieValue2")
+                .setComment("This is the second cookie")
+                .build();
+
+        // Add cookies to the Cookies object
+        Cookies cookies = new Cookies(cookie1, cookie2);
+
+//        // Send GET request with cookies and store the response in a variable
+//        Response response = given()
+//                .cookie(cookie1)
+//                .when()
+//                .get("users?page=2");
+
+        // Send GET request with cookies and store the response in a variable
+        Response response = given()
+                .cookies(cookies)
+                .when()
+                .get("users?page=2");
+
+        //Saving response code
+        int actualStatusCode =response.statusCode(); //RestAssured
+        assertThat(actualStatusCode,equalTo(200));
+
+        System.out.println("sendRequestUsingCookiesBuilder Executed!");
     }
 }
