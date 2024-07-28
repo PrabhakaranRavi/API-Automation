@@ -1,5 +1,6 @@
 package ValidateStatusCode;
 
+import core.StatusCode;
 import io.restassured.RestAssured;
 import io.restassured.http.Cookie;
 import io.restassured.http.Cookies;
@@ -350,5 +351,82 @@ public class statusValidate {
         assertThat(actualStatusCode,equalTo(200));
 
         System.out.println("sendRequestUsingCookiesBuilder Executed!");
+    }
+
+    @Test
+    public void validateResponseCookies(){
+        //Set Base URI for the API
+        RestAssured.baseURI = "https://reqres.in/api/";
+
+        // Send GET request with cookies and store the response in a variable
+        Response response = given()
+                .when()
+                .get("users?page=2");
+
+        //Saving response code
+        int actualStatusCode =response.statusCode(); //RestAssured
+        assertThat(actualStatusCode,equalTo(200));
+
+        Map<String, String> cookies = response.getCookies();
+        Cookies cookies1 = response.getDetailedCookies();
+
+        assertEquals(cookies1.getValue("Server"), "cloudflare");
+        assertThat(cookies, hasKey("SESSIONID"));
+        assertThat(cookies, hasValue("ABCDEF12345"));
+        System.out.println("validateResponseCookies Executed!");
+    }
+
+    @Test
+    public void validateResponseBodyGetBasicAuth(){
+        //Set Base URI for the API
+        RestAssured.baseURI = "https://postman-echo.com/";
+
+        // Send GET request with cookies and store the response in a variable
+        Response response = given()
+                .auth()
+                .basic("postman","password")
+                .when()
+                .get("basic-auth");
+
+        //Saving response code
+        int actualStatusCode =response.statusCode(); //RestAssured
+        assertThat(actualStatusCode,equalTo(200));
+        System.out.println(response.body().asString());
+        System.out.println("validateResponseBodyGetBasicAuth Executed!");
+    }
+
+    @Test
+    public void validateResponseBodyGetDigestAuth(){
+        //Set Base URI for the API
+        RestAssured.baseURI = "https://postman-echo.com/";
+
+        // Send GET request with cookies and store the response in a variable
+        Response response = given()
+                .auth()
+                .digest("postman","password")
+                .when()
+                .get("digest-auth");
+
+        //Saving response code
+        int actualStatusCode =response.statusCode(); //RestAssured
+        assertThat(actualStatusCode,equalTo(200));
+        System.out.println(response.body().asString());
+        System.out.println("validateResponseBodyGetDigestAuth Executed!");
+    }
+
+    @Test
+    public void validateDeleteStatusCode(){
+        //Set Base URI for the API
+        RestAssured.baseURI = "https://reqres.in/";
+
+        // Send GET request with cookies and store the response in a variable
+        Response response = given()
+                .delete("api/users/2");
+
+        //Saving response code
+        int actualStatusCode =response.statusCode(); //RestAssured
+        assertThat(actualStatusCode,equalTo(StatusCode.NO_CONTENT.code));
+
+        System.out.println("validateDeleteStatusCode Executed!");
     }
 }
