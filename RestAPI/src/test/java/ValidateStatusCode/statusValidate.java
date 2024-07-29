@@ -7,8 +7,14 @@ import io.restassured.http.Cookies;
 import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.response.Response;
+import org.json.simple.parser.ParseException;
+import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+import utils.JSONReader;
+import utils.PropertyReader;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -22,8 +28,8 @@ import static org.hamcrest.Matchers.*;
 public class statusValidate {
 
     @Test
-    public void statusCode(){
-                given().
+    public void statusCode() {
+        given().
                 when().
                 get("https://reqres.in/api/users?page=2").
                 then().
@@ -32,12 +38,12 @@ public class statusValidate {
     }
 
     @Test
-    public void validateGetResponseBody(){
+    public void validateGetResponseBody() {
         //Set Base URI for the API
         RestAssured.baseURI = "https://reqres.in/";
 
         // Send a GET request and validate the response body using Then
-                given().
+        given().
                 when().
                 get("api/users?page=2").
                 then().
@@ -54,7 +60,7 @@ public class statusValidate {
         RestAssured.baseURI = "https://jsonplaceholder.typicode.com";
 
         // Send GET request and store the response in a variable
-        Response response =  given().
+        Response response = given().
                 when().
                 get("/posts").
                 then().
@@ -65,11 +71,11 @@ public class statusValidate {
         String item2 = "qui est esse";
 
         //Use Hamcrest to check that the response body has contains specific items
-        assertThat(response.jsonPath().getList("title"), hasItems(item1,item2));
+        assertThat(response.jsonPath().getList("title"), hasItems(item1, item2));
     }
 
     @Test
-    public void validateResponseHasSize(){
+    public void validateResponseHasSize() {
         //Set Base URI for the API
         RestAssured.baseURI = "https://jsonplaceholder.typicode.com";
 
@@ -88,7 +94,7 @@ public class statusValidate {
     }
 
     @Test
-    public void validateListContainsInOrder(){
+    public void validateListContainsInOrder() {
         //Set Base URI for the API
         RestAssured.baseURI = "https://jsonplaceholder.typicode.com";
 
@@ -101,12 +107,12 @@ public class statusValidate {
                 response();
 
         //Use Hamcrest to check that response body contains specific items in specific order
-        List<String> expectedEmails = Arrays.asList("Eliseo@gardner.biz","Jayne_Kuhic@sydney.com","Nikita@garfield.biz","Lew@alysha.tv","Hayden@althea.biz");
-        assertThat(response.jsonPath().getList("email"),contains(expectedEmails.toArray(new String[0])));
+        List<String> expectedEmails = Arrays.asList("Eliseo@gardner.biz", "Jayne_Kuhic@sydney.com", "Nikita@garfield.biz", "Lew@alysha.tv", "Hayden@althea.biz");
+        assertThat(response.jsonPath().getList("email"), contains(expectedEmails.toArray(new String[0])));
     }
 
     @Test
-    public void validateListByIs(){
+    public void validateListByIs() {
         //Set Base URI for the API
         RestAssured.baseURI = "https://reqres.in/api/";
 
@@ -120,89 +126,89 @@ public class statusValidate {
         response.then().body("data", hasSize(6));
 
         //Assert that the first user in the list has the correct values - IS Matcher
-        response.then().body("data[0].id",is(7));
-        response.then().body("data[0].email",is("michael.lawson@reqres.in"));
-        response.then().body("data[0].first_name",is("Michael"));
-        response.then().body("data[0].last_name",is("Lawson"));
-        response.then().body("data[0].avatar",is("https://reqres.in/img/faces/7-image.jpg"));
+        response.then().body("data[0].id", is(7));
+        response.then().body("data[0].email", is("michael.lawson@reqres.in"));
+        response.then().body("data[0].first_name", is("Michael"));
+        response.then().body("data[0].last_name", is("Lawson"));
+        response.then().body("data[0].avatar", is("https://reqres.in/img/faces/7-image.jpg"));
 
-        response.then().body("data[1].id",equalTo(8));
-        response.then().body("data[1].email",equalTo("lindsay.ferguson@reqres.in"));
-        response.then().body("data[1].first_name",equalTo("Lindsay"));
-        response.then().body("data[1].last_name",equalTo("Ferguson"));
-        response.then().body("data[1].avatar",equalTo("https://reqres.in/img/faces/8-image.jpg"));
+        response.then().body("data[1].id", equalTo(8));
+        response.then().body("data[1].email", equalTo("lindsay.ferguson@reqres.in"));
+        response.then().body("data[1].first_name", equalTo("Lindsay"));
+        response.then().body("data[1].last_name", equalTo("Ferguson"));
+        response.then().body("data[1].avatar", equalTo("https://reqres.in/img/faces/8-image.jpg"));
 
     }
 
     @Test
-    public void queryParam(){
+    public void queryParam() {
         //Set Base URI for the API
         RestAssured.baseURI = "https://reqres.in/api/";
 
         // Send GET request and store the response in a variable
         Response response = given().
-                queryParam("page",2).
+                queryParam("page", 2).
                 when().
                 get("users");
 
         //Saving response code
-        int actualStatusCode =response.statusCode(); //RestAssured
-        assertThat(actualStatusCode,equalTo(200));
-        assertEquals(actualStatusCode,200);
+        int actualStatusCode = response.statusCode(); //RestAssured
+        assertThat(actualStatusCode, equalTo(200));
+        assertEquals(actualStatusCode, 200);
     }
 
     @Test
-    public void multiQueryParam(){
+    public void multiQueryParam() {
         //Set Base URI for the API
         RestAssured.baseURI = "https://reqres.in/api/";
 
         // Send GET request and store the response in a variable
         Response response = given().
-                queryParam("page",2).
-                queryParam("per_page",3).
+                queryParam("page", 2).
+                queryParam("per_page", 3).
                 when().
                 get("users");
 
         //Saving response code
-        int actualStatusCode =response.statusCode(); //RestAssured
-        assertThat(actualStatusCode,equalTo(200));
-        assertEquals(actualStatusCode,200);
+        int actualStatusCode = response.statusCode(); //RestAssured
+        assertThat(actualStatusCode, equalTo(200));
+        assertEquals(actualStatusCode, 200);
     }
 
     @Test(description = "Using path param, Getting the response of Circuits")
-    public void pathParam(){
+    public void pathParam() {
         //Set Base URI for the API
         RestAssured.baseURI = "https://ergast.com/api/";
         String raceSeasonValue = "2017";
         // Send GET request and store the response in a variable
         Response response = given().
-                pathParam("raceSeason",raceSeasonValue).
+                pathParam("raceSeason", raceSeasonValue).
                 when().
                 get("f1/{raceSeason}/circuits.json");
 
         //Saving response code
-        int actualStatusCode =response.statusCode(); //RestAssured
-        assertThat(actualStatusCode,equalTo(200));
+        int actualStatusCode = response.statusCode(); //RestAssured
+        assertThat(actualStatusCode, equalTo(200));
         System.out.println(response.body().asString());
     }
 
 
     @Test
-    public void formParam(){
+    public void formParam() {
         //Set Base URI for the API
         RestAssured.baseURI = "https://reqres.in/api/";
 
         // Send GET request and store the response in a variable
         Response response = given().
                 contentType("application/x-www-form-urlencoded").
-                formParam("name","morpheus").
-                formParam("job","leader").
+                formParam("name", "morpheus").
+                formParam("job", "leader").
                 when().
                 post("users");
 
         //Saving response code
-        int actualStatusCode =response.statusCode(); //RestAssured
-        assertThat(actualStatusCode,equalTo(201));
+        int actualStatusCode = response.statusCode(); //RestAssured
+        assertThat(actualStatusCode, equalTo(201));
 
         //Assert that the response contains the correct name and job values
         response.then().body("name", equalTo("morpheus"));
@@ -211,20 +217,20 @@ public class statusValidate {
     }
 
     @Test
-    public void singleHeader(){
+    public void singleHeader() {
         //Set Base URI for the API
         RestAssured.baseURI = "https://reqres.in/api/";
 
         // Send GET request and store the response in a variable
         Response response = given().
-                header("Content-Type","application/json").
+                header("Content-Type", "application/json").
                 when().
                 get("users");
 
 
         //Saving response code
-        int actualStatusCode =response.statusCode(); //RestAssured
-        assertThat(actualStatusCode,equalTo(200));
+        int actualStatusCode = response.statusCode(); //RestAssured
+        assertThat(actualStatusCode, equalTo(200));
 
         System.out.println("singleHeader Executed!");
 
@@ -232,33 +238,33 @@ public class statusValidate {
     }
 
     @Test
-    public void multiHeaders(){
+    public void multiHeaders() {
         //Set Base URI for the API
         RestAssured.baseURI = "https://reqres.in/api/";
 
         // Send GET request and store the response in a variable
         Response response = given().
-                header("Authorization","bearer werfwb548wwetrew").
-                header("Content-Type","application/json").
+                header("Authorization", "bearer werfwb548wwetrew").
+                header("Content-Type", "application/json").
                 when().
                 get("users");
 
         //Saving response code
-        int actualStatusCode =response.statusCode(); //RestAssured
-        assertThat(actualStatusCode,equalTo(200));
+        int actualStatusCode = response.statusCode(); //RestAssured
+        assertThat(actualStatusCode, equalTo(200));
 
         System.out.println("multiHeaders Executed!");
     }
 
     @Test
-    public void multiHeadersWithMap(){
+    public void multiHeadersWithMap() {
         //Set Base URI for the API
         RestAssured.baseURI = "https://reqres.in/api/";
 
         //Create map to hold headers
         Map<String, String> headers = new HashMap<>();
-        headers.put("Content-Type","application/json");
-        headers.put("Authorization","bearer werfwb548wwetrew");
+        headers.put("Content-Type", "application/json");
+        headers.put("Authorization", "bearer werfwb548wwetrew");
 
         // Send GET request and store the response in a variable
         Response response = given().
@@ -267,14 +273,14 @@ public class statusValidate {
                 get("users");
 
         //Saving response code
-        int actualStatusCode =response.statusCode(); //RestAssured
-        assertThat(actualStatusCode,equalTo(200));
+        int actualStatusCode = response.statusCode(); //RestAssured
+        assertThat(actualStatusCode, equalTo(200));
 
         System.out.println("multiHeadersWithMap Executed!");
     }
 
     @Test
-    public void validateResponseHeadersWithMap(){
+    public void validateResponseHeadersWithMap() {
         //Set Base URI for the API
         RestAssured.baseURI = "https://reqres.in/api/";
 
@@ -284,14 +290,14 @@ public class statusValidate {
                 get("users");
 
         //Saving response code
-        int actualStatusCode =response.statusCode(); //RestAssured
-        assertThat(actualStatusCode,equalTo(200));
+        int actualStatusCode = response.statusCode(); //RestAssured
+        assertThat(actualStatusCode, equalTo(200));
 
         Headers headers = response.getHeaders();
-        for(Header h: headers){
+        for (Header h : headers) {
 //            System.out.println(h.getName(), h.getValue();
-            if(h.getName().contains("Server")){
-                assertEquals(h.getValue(),"cloudflare");
+            if (h.getName().contains("Server")) {
+                assertEquals(h.getValue(), "cloudflare");
                 System.out.println("Server name is: " + h.getValue());
                 System.out.println("validateResponseHeadersWithMap Executed!");
             }
@@ -300,26 +306,26 @@ public class statusValidate {
     }
 
     @Test
-    public void sendRequestUsingCookies(){
+    public void sendRequestUsingCookies() {
         //Set Base URI for the API
         RestAssured.baseURI = "https://reqres.in/api/";
 
         // Send GET request and store the response in a variable
         Response response = given().
-                cookie("cookieKey1","cookieValue1").
-                cookie("cookieKey2","cookieValue2").
+                cookie("cookieKey1", "cookieValue1").
+                cookie("cookieKey2", "cookieValue2").
                 when().
                 get("users?page=2");
 
         //Saving response code
-        int actualStatusCode =response.statusCode(); //RestAssured
-        assertThat(actualStatusCode,equalTo(200));
+        int actualStatusCode = response.statusCode(); //RestAssured
+        assertThat(actualStatusCode, equalTo(200));
 
         System.out.println("sendRequestUsingCookies Executed!");
     }
 
     @Test
-    public void sendRequestUsingCookiesBuilder(){
+    public void sendRequestUsingCookiesBuilder() {
         //Set Base URI for the API
         RestAssured.baseURI = "https://reqres.in/api/";
 
@@ -347,14 +353,14 @@ public class statusValidate {
                 .get("users?page=2");
 
         //Saving response code
-        int actualStatusCode =response.statusCode(); //RestAssured
-        assertThat(actualStatusCode,equalTo(200));
+        int actualStatusCode = response.statusCode(); //RestAssured
+        assertThat(actualStatusCode, equalTo(200));
 
         System.out.println("sendRequestUsingCookiesBuilder Executed!");
     }
 
     @Test
-    public void validateResponseCookies(){
+    public void validateResponseCookies() {
         //Set Base URI for the API
         RestAssured.baseURI = "https://reqres.in/api/";
 
@@ -364,8 +370,8 @@ public class statusValidate {
                 .get("users?page=2");
 
         //Saving response code
-        int actualStatusCode =response.statusCode(); //RestAssured
-        assertThat(actualStatusCode,equalTo(200));
+        int actualStatusCode = response.statusCode(); //RestAssured
+        assertThat(actualStatusCode, equalTo(200));
 
         Map<String, String> cookies = response.getCookies();
         Cookies cookies1 = response.getDetailedCookies();
@@ -377,45 +383,45 @@ public class statusValidate {
     }
 
     @Test
-    public void validateResponseBodyGetBasicAuth(){
+    public void validateResponseBodyGetBasicAuth() throws IOException, ParseException {
         //Set Base URI for the API
         RestAssured.baseURI = "https://postman-echo.com/";
 
         // Send GET request with cookies and store the response in a variable
         Response response = given()
                 .auth()
-                .basic("postman","password")
+                .basic(JSONReader.getTestData("username"), JSONReader.getTestData("password"))
                 .when()
                 .get("basic-auth");
 
         //Saving response code
-        int actualStatusCode =response.statusCode(); //RestAssured
-        assertThat(actualStatusCode,equalTo(200));
+        int actualStatusCode = response.statusCode(); //RestAssured
+        assertThat(actualStatusCode, equalTo(200));
         System.out.println(response.body().asString());
         System.out.println("validateResponseBodyGetBasicAuth Executed!");
     }
 
     @Test
-    public void validateResponseBodyGetDigestAuth(){
+    public void validateResponseBodyGetDigestAuth() throws IOException, ParseException {
         //Set Base URI for the API
         RestAssured.baseURI = "https://postman-echo.com/";
 
         // Send GET request with cookies and store the response in a variable
         Response response = given()
                 .auth()
-                .digest("postman","password")
+                .digest(JSONReader.getTestData("username"), JSONReader.getTestData("password"))
                 .when()
                 .get("digest-auth");
 
         //Saving response code
-        int actualStatusCode =response.statusCode(); //RestAssured
-        assertThat(actualStatusCode,equalTo(200));
+        int actualStatusCode = response.statusCode(); //RestAssured
+        assertThat(actualStatusCode, equalTo(200));
         System.out.println(response.body().asString());
         System.out.println("validateResponseBodyGetDigestAuth Executed!");
     }
 
     @Test
-    public void validateDeleteStatusCode(){
+    public void validateDeleteStatusCode() {
         //Set Base URI for the API
         RestAssured.baseURI = "https://reqres.in/";
 
@@ -424,9 +430,56 @@ public class statusValidate {
                 .delete("api/users/2");
 
         //Saving response code
-        int actualStatusCode =response.statusCode(); //RestAssured
-        assertThat(actualStatusCode,equalTo(StatusCode.NO_CONTENT.code));
+        int actualStatusCode = response.statusCode(); //RestAssured
+        assertThat(actualStatusCode, equalTo(StatusCode.NO_CONTENT.code));
 
         System.out.println("validateDeleteStatusCode Executed!");
+    }
+
+    @Test
+    public void validateWithDataFromPropertiesFile() throws IOException, ParseException {
+        String URL = PropertyReader.propertyReader("config.properties", "server") + JSONReader.getTestData("endpoint");
+        Response resp = given().
+                queryParam("page", "2").
+                when().
+                get(URL);
+
+        assertEquals(200, resp.statusCode());
+    }
+
+    @Test
+    public void validateDataFromProperties_TestData() throws IOException, ParseException {
+        String URL = PropertyReader.propertyReader("config.properties", "server") + JSONReader.getTestData("endpoint");
+        Response resp = given().
+                queryParam("page", "2").
+                when().
+                get(URL);
+
+        assertEquals(200, resp.statusCode());
+        System.out.println("validateDataFromProperties_TestData executed " + URL);
+    }
+
+    @Test
+    public void hardAssertion() {
+        System.out.println("hardAssertion");
+        Assert.assertTrue(false);
+        System.out.println("hardAssertion");
+    }
+
+    @Test
+    public void softAssertion() {
+        System.out.println("softAssertion");
+
+        // Create an instance of SoftAssert
+        SoftAssert softAssertion = new SoftAssert();
+
+        // Using the softAssertion object to make assertions
+        softAssertion.assertTrue(false, "Assertion failed: expected true but got false");
+        softAssertion.assertTrue(true, "Assertion passed");
+
+        // Report all the collected assertions
+        softAssertion.assertAll();
+
+        System.out.println("softAssertion");
     }
 }
