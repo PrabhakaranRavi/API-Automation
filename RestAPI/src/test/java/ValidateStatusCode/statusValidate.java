@@ -13,6 +13,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import utils.JSONReader;
 import utils.PropertyReader;
+import utils.SoftAssertionUtil;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -26,6 +27,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 public class statusValidate {
+
+    // Create an instance of SoftAssert
+    SoftAssertionUtil softAssertion = new SoftAssertionUtil();
 
     @Test
     public void statusCode() {
@@ -470,9 +474,6 @@ public class statusValidate {
     public void softAssertion() {
         System.out.println("softAssertion");
 
-        // Create an instance of SoftAssert
-        SoftAssert softAssertion = new SoftAssert();
-
         // Using the softAssertion object to make assertions
         softAssertion.assertTrue(false, "Assertion failed: expected true but got false");
         softAssertion.assertTrue(true, "Assertion passed");
@@ -482,4 +483,18 @@ public class statusValidate {
 
         System.out.println("softAssertion");
     }
+
+    @Test
+    public void validateWithSoftAssertUtil() throws IOException, ParseException {
+        String URL = PropertyReader.propertyReader("config.properties", "server") + JSONReader.getTestData("endpoint");
+        Response resp = given().
+                queryParam("page", "2").
+                when().
+                get(URL);
+
+        softAssertion.assertEquals(resp.statusCode(), StatusCode.SUCCESS.code, "Status code is not 200");
+        softAssertion.assertAll();
+        System.out.println("validateWithSoftAssertUtil executed " + URL);
+    }
+
 }
