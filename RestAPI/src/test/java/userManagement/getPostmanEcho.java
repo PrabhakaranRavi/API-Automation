@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class getPostmanEcho {
 
-    @Test
+    @Test(groups = "RegressionSuite")
     public void validateResponseBodyGetBasicAuth() throws IOException, ParseException {
         //Set Base URI for the API
         RestAssured.baseURI = "https://postman-echo.com/";

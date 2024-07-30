@@ -31,4 +31,15 @@ public class JSONReader {
 
         return jsonObj;
     }
+
+    public static JSONArray getJSONArray(String key) throws IOException, ParseException {
+        JSONObject jsonObject = getJsonData();
+        return (JSONArray) jsonObject.get(key);
+    }
+
+    public static Object getJSONArrayData(String key, int index) throws IOException, ParseException {
+        JSONArray roles = getJSONArray(key);
+        return roles.get(index);
+    }
+
 }

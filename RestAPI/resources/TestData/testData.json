@@ -1,5 +1,6 @@
 {
   "username": "postman",
   "password": "password",
-  "endpoint": "users"
+  "endpoint": "users",
+  "roles": ["SDET","SDET-1","SDET-2"]
 }

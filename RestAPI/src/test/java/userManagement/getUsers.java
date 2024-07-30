@@ -134,7 +134,7 @@ public class getUsers {
 
     }
 
-    @Test
+    @Test(groups = {"SmokeSuite", "RegressionSuite"})
     public void queryParam() {
         //Set Base URI for the API
         RestAssured.baseURI = "https://reqres.in/api/";
@@ -151,7 +151,7 @@ public class getUsers {
         assertEquals(actualStatusCode, 200);
     }
 
-    @Test
+    @Test(groups = "RegressionSuite")
     public void multiQueryParam() {
         //Set Base URI for the API
         RestAssured.baseURI = "https://reqres.in/api/";
