@@ -8,6 +8,7 @@ import org.json.simple.parser.ParseException;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 
 
 public class JSONReader {
@@ -40,6 +41,15 @@ public class JSONReader {
     public static Object getJSONArrayData(String key, int index) throws IOException, ParseException {
         JSONArray roles = getJSONArray(key);
         return roles.get(index);
+    }
+
+    public static Iterator<?> getJSONComplexData(String key) throws IOException, ParseException {
+        JSONArray jsonArray = getJSONArray(key);
+        if (jsonArray != null) {
+            return jsonArray.iterator();
+        } else {
+            return null; // Or throw an exception if the key does not exist
+        }
     }
 
 }

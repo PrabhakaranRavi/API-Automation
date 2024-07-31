@@ -2,5 +2,12 @@
   "username": "postman",
   "password": "password",
   "endpoint": "users",
-  "roles": ["SDET","SDET-1","SDET-2"]
+  "roles": ["SDET","SDET-1","SDET-2"],
+  "getPostmanEcho": [
+    "e-mail: sidharth.shukla19@gmail.com",
+    "phone: 9848022338",
+    "city: Vancouver",
+    "Area: Surrey",
+    "State: BC"
+  ]
 }

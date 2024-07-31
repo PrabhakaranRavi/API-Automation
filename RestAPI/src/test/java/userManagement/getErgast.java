@@ -8,6 +8,8 @@ import org.testng.annotations.Test;
 import utils.JSONReader;
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -35,5 +37,17 @@ public class getErgast {
     @Test
     public void testGetJSONArray() throws IOException, ParseException {
        System.out.println(JSONReader.getJSONArrayData("roles",2));
+
+       JSONArray jsonArray = JSONReader.getJSONArray("getPostmanEcho");
+       Iterator<String> iterator = jsonArray.iterator();
+       while(iterator.hasNext()){
+           System.out.println(iterator.next());
+       }
+
+       //Getting the data from JSON Reader class methods
+       Iterator<?> iterator1 = JSONReader.getJSONComplexData("getPostmanEcho");
+        while(iterator1.hasNext()){
+            System.out.println(iterator1.next());
+        }
     }
 }
