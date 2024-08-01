@@ -51,4 +51,6 @@ public class getPostmanEcho {
         System.out.println(response.body().asString());
         System.out.println("validateResponseBodyGetDigestAuth Executed!");
     }
+
+
 }

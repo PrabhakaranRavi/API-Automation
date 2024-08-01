@@ -12,6 +12,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import utils.ExtentReport;
 import utils.JSONReader;
 import utils.PropertyReader;
 import utils.SoftAssertionUtil;
@@ -153,6 +154,10 @@ public class getUsers {
 
     @Test(groups = "RegressionSuite")
     public void multiQueryParam() {
+        //Passing information to ExtentReport Class
+        ExtentReport.extentlog = ExtentReport.extentreport
+                .startTest("multiQueryParam", "Validate 200 status code for GET Method with Query Param");
+
         //Set Base URI for the API
         RestAssured.baseURI = "https://reqres.in/api/";
 
@@ -362,6 +367,10 @@ public class getUsers {
 
     @Test
     public void validateDeleteStatusCode() {
+        //Passing information to ExtentReport Class
+        ExtentReport.extentlog = ExtentReport.extentreport
+                .startTest("validateDeleteStatusCode", "Validate 204 status code for DELETE Method");
+
         //Set Base URI for the API
         RestAssured.baseURI = "https://reqres.in/";
 

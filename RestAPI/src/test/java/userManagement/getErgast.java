@@ -5,6 +5,7 @@ import io.restassured.response.Response;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.ParseException;
 import org.testng.annotations.Test;
+import utils.ExtentReport;
 import utils.JSONReader;
 
 import java.io.IOException;
@@ -19,6 +20,9 @@ public class getErgast {
 
     @Test(description = "Using path param, Getting the response of Circuits", groups = "RegressionSuite")
     public void pathParam() {
+        //Passing information to ExtentReport Class
+        ExtentReport.extentlog = ExtentReport.extentreport
+                .startTest("pathParam", "Validate 200 status code for GET Method");
         //Set Base URI for the API
         RestAssured.baseURI = "https://ergast.com/api/";
         String raceSeasonValue = "2017";
