@@ -1,5 +1,6 @@
 package userManagement;
 
+import core.BaseTest;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.json.simple.JSONArray;
@@ -16,7 +17,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-public class getErgast {
+public class getErgast extends BaseTest {
 
     @Test(description = "Using path param, Getting the response of Circuits", groups = "RegressionSuite")
     public void pathParam() {

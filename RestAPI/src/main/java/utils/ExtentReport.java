@@ -19,7 +19,7 @@ public class ExtentReport {
 
             extentreport.addSystemInfo("Environment", "QA");
 
-            extentreport.addSystemInfo("OS", "Mac OS X");
+            extentreport.addSystemInfo("OS", "Windows");
 
             extentreport.loadConfig(new File(System.getProperty("user.dir") + "/resources/extent-config.xml"));
 

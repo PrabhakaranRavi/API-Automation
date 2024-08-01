@@ -1,5 +1,6 @@
 package userManagement;
 
+import core.BaseTest;
 import core.StatusCode;
 import io.restassured.RestAssured;
 import io.restassured.http.Cookie;
@@ -28,7 +29,7 @@ import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class getUsers {
+public class getUsers extends BaseTest {
     // Create an instance of SoftAssert
     SoftAssertionUtil softAssertion = new SoftAssertionUtil();
 
