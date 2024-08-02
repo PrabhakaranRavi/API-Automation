@@ -13,6 +13,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import pojo.postRequestBody;
 import utils.ExtentReport;
 import utils.JSONReader;
 import utils.PropertyReader;
@@ -475,5 +476,22 @@ public class getUsers extends BaseTest {
         softAssertion.assertAll(); // This will report any failed assertions
 
         System.out.println("testEndPoint executed " + URL);
+    }
+
+
+    @Test
+    public void validatePostWithPojo() {
+
+        postRequestBody postRequest = new postRequestBody();
+        postRequest.setJob("leader");
+        postRequest.setName("morpheus");
+        Response response = given()
+                .header("Content-Type", "application/json")
+                .body(postRequest)
+                .when()
+                .post("https://reqres.in/api/users");
+        assertEquals(response.getStatusCode(), StatusCode.CREATED.code);
+        System.out.println("validatePostWithPojo executed successfully");
+        System.out.println(response.getBody().asString());
     }
 }
