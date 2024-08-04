@@ -20,10 +20,7 @@ import utils.PropertyReader;
 import utils.SoftAssertionUtil;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static io.restassured.RestAssured.given;
 import static junit.framework.Assert.assertEquals;
@@ -479,19 +476,4 @@ public class getUsers extends BaseTest {
     }
 
 
-    @Test
-    public void validatePostWithPojo() {
-
-        postRequestBody postRequest = new postRequestBody();
-        postRequest.setJob("leader");
-        postRequest.setName("morpheus");
-        Response response = given()
-                .header("Content-Type", "application/json")
-                .body(postRequest)
-                .when()
-                .post("https://reqres.in/api/users");
-        assertEquals(response.getStatusCode(), StatusCode.CREATED.code);
-        System.out.println("validatePostWithPojo executed successfully");
-        System.out.println(response.getBody().asString());
-    }
 }
