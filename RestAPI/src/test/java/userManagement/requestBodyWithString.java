@@ -22,7 +22,7 @@ import static junit.framework.Assert.assertEquals;
 public class requestBodyWithString {
 
     // Create an instance of SoftAssert
-    SoftAssertionUtil softAssertion = new SoftAssertionUtil();
+//    SoftAssertionUtil softAssertion = new SoftAssertionUtil();
 
     private static FileInputStream readFileInputStream(String filePathName) throws FileNotFoundException {
         FileInputStream fileInputStream;
@@ -46,7 +46,7 @@ public class requestBodyWithString {
                 when().
                 post("users");
 
-        softAssertion.assertEquals(response.statusCode(), StatusCode.CREATED.code,"Post call created");
+        SoftAssertionUtil.assertEquals(response.statusCode(), StatusCode.CREATED.code,"Post call created");
         System.out.println(response.body().asString());
         System.out.println("requestBodyPostWithString Executed!");
     }
@@ -63,7 +63,7 @@ public class requestBodyWithString {
                 when().
                 put("users/2");
 
-        softAssertion.assertEquals(response.statusCode(), StatusCode.SUCCESS.code,"Put call created");
+        SoftAssertionUtil.assertEquals(response.statusCode(), StatusCode.SUCCESS.code,"Put call created");
         System.out.println(response.body().asString());
         System.out.println("requestBodyPutWithString Executed!");
     }
@@ -80,7 +80,7 @@ public class requestBodyWithString {
                 when().
                 patch("users/2");
 
-        softAssertion.assertEquals(response.statusCode(), StatusCode.SUCCESS.code,"Patch call created");
+        SoftAssertionUtil.assertEquals(response.statusCode(), StatusCode.SUCCESS.code,"Patch call created");
         System.out.println(response.body().asString());
         System.out.println("requestBodyPatchWithString Executed!");
     }
@@ -97,7 +97,7 @@ public class requestBodyWithString {
                 when().
                 post("users");
 
-        softAssertion.assertEquals(response.statusCode(), StatusCode.CREATED.code,"Post call created");
+        SoftAssertionUtil.assertEquals(response.statusCode(), StatusCode.CREATED.code,"Post call created");
         System.out.println(response.body().asString());
         System.out.println("requestBodyPostWithExternalJSON Executed!");
     }
@@ -114,7 +114,7 @@ public class requestBodyWithString {
                 when().
                 put("users/2");
 
-        softAssertion.assertEquals(response.statusCode(), StatusCode.SUCCESS.code,"Put call created");
+        SoftAssertionUtil.assertEquals(response.statusCode(), StatusCode.SUCCESS.code,"Put call created");
         System.out.println(response.body().asString());
         System.out.println("requestBodyPutWithExternalJSON Executed!");
     }
@@ -131,7 +131,7 @@ public class requestBodyWithString {
                 when().
                 patch("users/2");
 
-        softAssertion.assertEquals(response.statusCode(), StatusCode.SUCCESS.code,"Patch call created");
+        SoftAssertionUtil.assertEquals(response.statusCode(), StatusCode.SUCCESS.code,"Patch call created");
         System.out.println(response.body().asString());
         System.out.println("requestBodyPatchWithExternalJSON Executed!");
     }
@@ -157,7 +157,7 @@ public class requestBodyWithString {
                 when().
                 post("users");
 
-        softAssertion.assertEquals(response.statusCode(), StatusCode.CREATED.code,"Post call created");
+        SoftAssertionUtil.assertEquals(response.statusCode(), StatusCode.CREATED.code,"Post call created");
         System.out.println(response.body().asString());
         System.out.println("validatePostWithPojo Executed!");
     }
@@ -178,7 +178,7 @@ public class requestBodyWithString {
                 when().
                 put("users/2");
 
-        softAssertion.assertEquals(response.statusCode(), StatusCode.SUCCESS.code,"Put call created");
+        SoftAssertionUtil.assertEquals(response.statusCode(), StatusCode.SUCCESS.code,"Put call created");
         System.out.println(response.body().asString());
         System.out.println("requestBodyPutWithPojo Executed!");
     }
@@ -198,7 +198,7 @@ public class requestBodyWithString {
                 when().
                 patch("users/2");
 
-        softAssertion.assertEquals(response.statusCode(), StatusCode.SUCCESS.code,"Patch call created");
+        SoftAssertionUtil.assertEquals(response.statusCode(), StatusCode.SUCCESS.code,"Patch call created");
         System.out.println(response.body().asString());
         System.out.println("requestBodyPatchWithPojo Executed!");
     }
@@ -236,7 +236,7 @@ public class requestBodyWithString {
                 when().
                 post("users");
 
-        softAssertion.assertEquals(response.statusCode(), StatusCode.CREATED.code,"Post call created");
+        SoftAssertionUtil.assertEquals(response.statusCode(), StatusCode.CREATED.code,"Post call created");
         System.out.println(response.body().asString());
         System.out.println("validatePostWithPojoListObject Executed!");
     }

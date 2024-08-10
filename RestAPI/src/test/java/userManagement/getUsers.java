@@ -29,7 +29,7 @@ import static org.hamcrest.Matchers.*;
 
 public class getUsers extends BaseTest {
     // Create an instance of SoftAssert
-    SoftAssertionUtil softAssertion = new SoftAssertionUtil();
+//    SoftAssertionUtil softAssertion = new SoftAssertionUtil();
 
     @Test
     public void validateGetResponseBody() {
@@ -419,11 +419,11 @@ public class getUsers extends BaseTest {
         System.out.println("softAssertion");
 
         // Using the softAssertion object to make assertions
-        softAssertion.assertTrue(false, "Assertion failed: expected true but got false");
-        softAssertion.assertTrue(true, "Assertion passed");
+        SoftAssertionUtil.assertTrue(false, "Assertion failed: expected true but got false");
+        SoftAssertionUtil.assertTrue(true, "Assertion passed");
 
         // Report all the collected assertions
-        softAssertion.assertAll();
+        SoftAssertionUtil.assertAll();
 
         System.out.println("softAssertion");
     }
@@ -436,8 +436,8 @@ public class getUsers extends BaseTest {
                 when().
                 get(URL);
 
-        softAssertion.assertEquals(resp.statusCode(), StatusCode.SUCCESS.code, "Status code is not 200");
-        softAssertion.assertAll();
+        SoftAssertionUtil.assertEquals(resp.statusCode(), StatusCode.SUCCESS.code, "Status code is not 200");
+        SoftAssertionUtil.assertAll();
         System.out.println("validateWithSoftAssertUtil executed " + URL);
     }
 
@@ -469,8 +469,8 @@ public class getUsers extends BaseTest {
         System.out.println("Response Body: " + resp.getBody().asString());
 
         // Validate the response
-        softAssertion.assertEquals(resp.statusCode(), StatusCode.SUCCESS.code, "Status code is not 200");
-        softAssertion.assertAll(); // This will report any failed assertions
+        SoftAssertionUtil.assertEquals(resp.statusCode(), StatusCode.SUCCESS.code, "Status code is not 200");
+        SoftAssertionUtil.assertAll(); // This will report any failed assertions
 
         System.out.println("testEndPoint executed " + URL);
     }

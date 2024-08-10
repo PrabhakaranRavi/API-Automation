@@ -3,8 +3,7 @@
 <suite name="API Automation Session Smoke Suite">
     <test name="API Users TestCases">
         <packages>
-            <package name="userManagement" />
-            <package name="Test" />
+            <package name="userManagement.getErgast" />
         </packages>
     </test>
 </suite>

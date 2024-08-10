@@ -3,25 +3,30 @@ package utils;
 import org.testng.asserts.SoftAssert;
 
 public class SoftAssertionUtil {
-    private final SoftAssert softAssert;
+    private static SoftAssert softAssertInstance;
 
-    public SoftAssertionUtil() {
-        softAssert = new SoftAssert();
+    private SoftAssertionUtil() {}
+
+    public static SoftAssert getInstance(){
+        if(softAssertInstance == null){
+            softAssertInstance = new SoftAssert();
+        }
+        return softAssertInstance;
     }
 
-    public void assertTrue(boolean condition, String message) {
-        softAssert.assertTrue(condition, message);
+    public static void assertTrue(boolean condition, String message) {
+        getInstance().assertTrue(condition, message);
     }
 
-    public void assertEquals(Object actual, Object expected, String message) {
-        softAssert.assertEquals(actual, expected, message);
+    public static void assertEquals(Object actual, Object expected, String message) {
+        getInstance().assertEquals(actual, expected, message);
     }
 
-    public void assertNotEquals(Object actual, Object expected, String message) {
-        softAssert.assertNotEquals(actual, expected, message);
+    public static void assertNotEquals(Object actual, Object expected, String message) {
+        getInstance().assertNotEquals(actual, expected, message);
     }
 
-    public void assertAll() {
-        softAssert.assertAll();
+    public static void assertAll() {
+        getInstance().assertAll();
     }
 }
